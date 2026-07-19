@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>FIFA 2026 Crowd Simulation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/simulation.css" />
+</head>
+<body>
+  <div class="dashboard">
+    <div class="top-bar">
+      <div style="display:flex; align-items:center; gap:15px;">
+        <a href="../index.html" class="btn btn-secondary" style="text-decoration:none;">&larr; Back</a>
+        <h1 style="font-size:1.1rem; margin:0;">2D Live Crowd Simulation</h1>
+      </div>
+      <div style="display:flex; gap: 20px;">
+        <div class="stat-box"><span class="stat-label">Total People</span><span class="stat-value" id="stat-total">0</span></div>
+        <div class="stat-box"><span class="stat-label">Occupancy</span><span class="stat-value" id="stat-occ">0%</span></div>
+        <div class="stat-box"><span class="stat-label">Active Alerts</span><span class="stat-value" id="stat-alerts" style="color:#E21A22;">0</span></div>
+      </div>
+    </div>
+    
+    <div class="canvas-container" id="canvas-container">
+      <canvas id="sim-canvas"></canvas>
+    </div>
+    
+    <div class="sidebar">
+      <h3 style="margin-top:0; font-size:0.9rem; text-transform:uppercase; color:#8E8E93;">Live Incident Alerts</h3>
+      <div id="alerts-panel"></div>
+    </div>
+    
+    <div class="bottom-bar">
+      <div class="control-group">
+        <button class="btn btn-secondary" id="btn-playpause">Pause</button>
+        <button class="btn btn-secondary" id="btn-reset">Reset</button>
+      </div>
+      <div class="control-group" style="margin-left: auto;">
+        <label style="font-size: 0.75rem; text-transform: uppercase; color:#8E8E93;">Scenario:</label>
+        <button class="btn btn-primary" id="btn-scen-normal">Normal Flow</button>
+        <button class="btn btn-warning" id="btn-scen-surge" style="background:#F9A01B;">Exit Surge</button>
+        <button class="btn btn-danger" id="btn-scen-evac">Emergency Evac</button>
+      </div>
+    </div>
+  </div>
+  
+  <script type="module" src="js/simulation/main.js"></script>
+</body>
+</html>
