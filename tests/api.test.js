@@ -63,4 +63,48 @@ describe('Smart Stadium API Endpoints', () => {
     expect(res.statusCode).toEqual(204);
     expect(res.headers['access-control-allow-origin']).toEqual('*');
   });
+
+  // Additional coverage for youtubeShorts.js (simulate fetching trending shorts)
+  it('GET /api/trending-shorts with simulated response', async () => {
+    // This hits handleTrendingShorts directly.
+    const res = await request(server).get('/api/trending-shorts');
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.success).toBe(true);
+    expect(res.body.shorts.length).toBeGreaterThan(0);
+  });
+
+  // Additional coverage for generateMoment.js edge cases
+  it('POST /api/generate-moment with missing userSentiment', async () => {
+    const res = await request(server).post('/api/generate-moment').send({ 
+      matchData: { timestamp: 12345 },
+      userId: 'test_user_123'
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toContain('Validation Error');
+  });
+
+  it('POST /api/generate-moment with missing matchData', async () => {
+    const res = await request(server).post('/api/generate-moment').send({ 
+      userSentiment: 'Emergency Evac',
+      userId: 'test_user_123'
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toContain('Validation Error');
+  });
+
+  it('POST /api/generate-moment with missing userId', async () => {
+    const res = await request(server).post('/api/generate-moment').send({ 
+      userSentiment: 'Emergency Evac',
+      matchData: { timestamp: 12345 }
+    });
+    expect(res.statusCode).toEqual(400);
+    expect(res.body.error).toContain('Validation Error');
+  });
+
+  // Additional coverage for footballApi.js error paths
+  it('GET /api/live-matches should handle missing query gracefully', async () => {
+    const res = await request(server).get('/api/live-matches?invalid=true');
+    expect(res.statusCode).toEqual(200);
+    expect(res.body.success).toBe(true);
+  });
 });

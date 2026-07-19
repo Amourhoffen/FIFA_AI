@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.66% </span>
+                <span class="strong">45.63% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>46/103</span>
+                <span class='fraction'>47/103</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.63% </span>
+                <span class="strong">15.45% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>15/110</span>
+                <span class='fraction'>17/110</span>
             </div>
         
             
@@ -719,7 +719,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -753,18 +753,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -931,9 +931,9 @@ function getSimulatedData() {
   const balls1 = tick % 6;
 &nbsp;
   const inngs2Started = ov1 &gt;= 10; // start 2nd innings early for demo
-  const ov2 = inngs2Started ? <span class="branch-0 cbranch-no" title="branch not covered" >Math.min(20, 1 + Math.floor((tick % 150) / 10)) </span>: 0;
-  const runs2 = inngs2Started ? <span class="branch-0 cbranch-no" title="branch not covered" >Math.min(runs1 + 5, Math.floor(ov2 * 6 + ((tick + 10) % 60))) </span>: 0;
-  const wkts2 = inngs2Started ? <span class="branch-0 cbranch-no" title="branch not covered" >Math.min(10, Math.floor((tick % 100) / 18)) </span>: 0;
+  const ov2 = inngs2Started ? Math.min(20, 1 + Math.floor((tick % 150) / 10)) : <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+  const runs2 = inngs2Started ? Math.min(runs1 + 5, Math.floor(ov2 * 6 + ((tick + 10) % 60))) : <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+  const wkts2 = inngs2Started ? Math.min(10, Math.floor((tick % 100) / 18)) : <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
   const balls2 = (tick + 3) % 6;
 &nbsp;
   return [
@@ -952,12 +952,12 @@ function getSimulatedData() {
       FirstAttackingTeamCode: 'POR',
       SecondAttackingTeamCode: 'CRO',
       FirstAttackingSummary: `${runs1}/${wkts1} (${ov1}.${balls1} Ov)`,
-      SecondAttackingSummary: inngs2Started ? <span class="branch-0 cbranch-no" title="branch not covered" >`${runs2}/${wkts2} (${ov2}.${balls2} Ov)` </span>: '--',
+      SecondAttackingSummary: inngs2Started ? `${runs2}/${wkts2} (${ov2}.${balls2} Ov)` : <span class="branch-1 cbranch-no" title="branch not covered" >'--',</span>
       CurrentStrikerName: 'Yashasvi Jaiswal',
       CurrentBowlerName: 'Ravi Bishnoi',
       Commentss: inngs2Started
-        ? <span class="branch-0 cbranch-no" title="branch not covered" >`CRO need ${Math.max(0, runs1 - runs2 + 1)} runs from ${Math.max(0, (20 - ov2) * 6 - balls2)} balls`</span>
-        : `Portugal building momentum — Ronaldo playing aggressively!`,
+        ? `CRO need ${Math.max(0, runs1 - runs2 + 1)} runs from ${Math.max(0, (20 - ov2) * 6 - balls2)} balls`
+        : <span class="branch-1 cbranch-no" title="branch not covered" >`Portugal building momentum — Ronaldo playing aggressively!`,</span>
       TossText: 'CRO won the toss and elected to bowl',
       RunRate: (runs1 / Math.max(1, ov1 + balls1 / 6)).toFixed(2),
       MatchDesc: 'Match 64 · TATA FIFA 2026 2026',
@@ -1076,7 +1076,7 @@ function getSimulatedData() {
 &nbsp;
 // ─── Main Data Fetcher ─────────────────────────────────────────────────────
 async function getLiveMatches() {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (cache.data &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >Date.now() &lt; cache.expiresAt)</span> <span class="cstat-no" title="statement not covered" >return cache.data;</span>
+  if (cache.data &amp;&amp; Date.now() &lt; cache.expiresAt) return cache.data;
 &nbsp;
   let matches = null;
 &nbsp;
@@ -1141,7 +1141,7 @@ export async function handleLiveMatches(request, response) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2026-07-19T17:15:17.323Z
+                at 2026-07-19T17:28:50.968Z
             </div>
         <script src="../prettify.js"></script>
         <script>
