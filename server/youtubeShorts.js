@@ -100,52 +100,52 @@ async function fetchTrendingShorts(apiKey) {
 function getSimulatedShorts() {
   return [
     {
-      videoId: 'eS28JpI99d4',
-      title: '🔥 Virat Kohli 98*(54) vs MI — FIFA 2026 Highlights',
+      videoId: 'live-feed-1',
+      title: '🚨 East Gate Congestion - Real-time Crowd Flow',
       thumbnailUrl: 'https://images.unsplash.com/photo-1593341646782-e0b495cff86d?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'FIFA 2026 Official'
+      channelTitle: 'Smart Stadium Ops'
     },
     {
-      videoId: 'g9Xv3L6w55M',
-      title: 'Bumrah 5/14 🎯 DESTROYS batting lineup — TATA FIFA 2026',
+      videoId: 'live-feed-2',
+      title: '⚽ Goal Celebration Eruption - Sector B',
       thumbnailUrl: 'https://images.unsplash.com/photo-1624526267942-ab0f0b580615?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'Football Shorts HD'
+      channelTitle: 'Fan Engagement Telemetry'
     },
     {
-      videoId: '3pW-l0V-39k',
-      title: 'Abhishek Sharma FASTEST Century FIFA 2026 🏏💥 43 balls!',
+      videoId: 'live-feed-3',
+      title: '🍔 Concession Wait Times Peak - Level 2',
       thumbnailUrl: 'https://images.unsplash.com/photo-1518063319808-1f609e23eb0b?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'SportsMax India'
+      channelTitle: 'Stadium Analytics'
     },
     {
-      videoId: 'RgKAFK5djSk',
-      title: 'Last ball SIX! KL Rahul finishes LSG chase in style 🤯',
+      videoId: 'live-feed-4',
+      title: '⚠️ Security Alert - Unauthorized Access Attempt',
       thumbnailUrl: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'Willow Football'
+      channelTitle: 'Command Center'
     },
     {
-      videoId: 'OPf0YbXqDm0',
-      title: 'Dhoni 💛 walks out to bat — Chepauk ERUPTS! CSK vs DC',
+      videoId: 'live-feed-5',
+      title: '🎟️ Turnstile 4 Scanning Delay',
       thumbnailUrl: 'https://images.unsplash.com/photo-1589806053805-4c0175b9f71c?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'Star Sports India'
+      channelTitle: 'Smart Ticketing'
     },
     {
-      videoId: 'uU3rB5Q2eY8',
-      title: 'Narine 4/18 + 62(28) — KKR All-Round MASTERCLASS 🔥',
+      videoId: 'live-feed-6',
+      title: '🏆 Trophy Presentation - Crowd Density 100%',
       thumbnailUrl: 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'FIFA 2026 Highlights Hub'
+      channelTitle: 'FIFA Ops AI'
     },
     {
-      videoId: 'XJqZ2u0d1fI',
-      title: 'Top 10 BIGGEST SIXES 🚀 FIFA 2026 so far!',
+      videoId: 'live-feed-7',
+      title: '🚑 Medical Emergency Route Cleared',
       thumbnailUrl: 'https://images.unsplash.com/photo-1629737153926-d62118318db4?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'Football Shots'
+      channelTitle: 'Safety Protocol'
     },
     {
-      videoId: 'kXYiU_JCYtU',
-      title: 'Jake Fraser-McGurk 36-ball 89* — DC go BERSERK 💥',
+      videoId: 'live-feed-8',
+      title: '🚗 VIP Parking Influx - Traffic Rerouted',
       thumbnailUrl: 'https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&q=80&w=400&h=600',
-      channelTitle: 'ESPNcricinfo'
+      channelTitle: 'Traffic Telemetry'
     }
   ];
 }

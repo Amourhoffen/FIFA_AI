@@ -850,8 +850,14 @@ function openVideoModal(videoId) {
   
   if (!modal || !container) return;
   
-  // Load iframe with Shorts-specific parameters (hide controls, loop video, disable annotations)
-  container.innerHTML = `<iframe class="w-full h-full scale-[1.05]" src="https://www.youtube.com/embed/${videoId}?autoplay=1&controls=0&rel=0&modestbranding=1&loop=1&playlist=${videoId}&playsinline=1&iv_load_policy=3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  // Display a simulated crowd telemetry feed instead of a YouTube video
+  container.innerHTML = `
+    <div class="w-full h-full flex flex-col items-center justify-center bg-[#0D0D12] text-white">
+      <svg class="w-16 h-16 mb-4 text-[#00A15D] animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+      <h2 class="text-xl font-bold mb-2">Live Telemetry Feed: ${videoId}</h2>
+      <p class="text-sm text-gray-400">Monitoring crowd density and flow in real-time...</p>
+    </div>
+  `;
   
   // Show modal
   modal.classList.remove("opacity-0", "pointer-events-none");
