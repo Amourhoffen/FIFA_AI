@@ -10,16 +10,16 @@ const QUICK_ACTIONS = [
 
 const TEAM_THEMES = {
   ALL: { label: "All Teams", accent: "#C77DFF", gradient: "linear-gradient(135deg, #7B2CBF, #C77DFF)" },
-  CSK: { label: "Chennai Super Kings", accent: "#FBBF24", gradient: "linear-gradient(135deg, #7B2CBF, #F472B6)" },
-  MI: { label: "Mumbai Indians", accent: "#60A5FA", gradient: "linear-gradient(135deg, #2563EB, #7C3AED)" },
-  RCB: { label: "Royal Challengers Bengaluru", accent: "#F87171", gradient: "linear-gradient(135deg, #DC2626, #F472B6)" },
-  KKR: { label: "Kolkata Knight Riders", accent: "#C084FC", gradient: "linear-gradient(135deg, #6D28D9, #C084FC)" },
-  SRH: { label: "Sunrisers Hyderabad", accent: "#FB923C", gradient: "linear-gradient(135deg, #EA580C, #F97316)" },
-  RR: { label: "Rajasthan Royals", accent: "#F472B6", gradient: "linear-gradient(135deg, #BE185D, #F472B6)" },
-  DC: { label: "Delhi Capitals", accent: "#60A5FA", gradient: "linear-gradient(135deg, #1D4ED8, #38BDF8)" },
-  GT: { label: "Gujarat Titans", accent: "#38BDF8", gradient: "linear-gradient(135deg, #0F766E, #38BDF8)" },
-  PBKS: { label: "Punjab Kings", accent: "#FB7185", gradient: "linear-gradient(135deg, #BE123C, #FB7185)" },
-  LSG: { label: "Lucknow Super Giants", accent: "#2DD4BF", gradient: "linear-gradient(135deg, #0F766E, #2DD4BF)" }
+  ARG: { label: "Argentina", accent: "#FBBF24", gradient: "linear-gradient(135deg, #7B2CBF, #F472B6)" },
+  FRA: { label: "France", accent: "#60A5FA", gradient: "linear-gradient(135deg, #2563EB, #7C3AED)" },
+  BRA: { label: "Brazil", accent: "#F87171", gradient: "linear-gradient(135deg, #DC2626, #F472B6)" },
+  ENG: { label: "England", accent: "#C084FC", gradient: "linear-gradient(135deg, #6D28D9, #C084FC)" },
+  ESP: { label: "Spain", accent: "#FB923C", gradient: "linear-gradient(135deg, #EA580C, #F97316)" },
+  POR: { label: "Portugal", accent: "#F472B6", gradient: "linear-gradient(135deg, #BE185D, #F472B6)" },
+  GER: { label: "Germany", accent: "#60A5FA", gradient: "linear-gradient(135deg, #1D4ED8, #38BDF8)" },
+  ITA: { label: "Italy", accent: "#38BDF8", gradient: "linear-gradient(135deg, #0F766E, #38BDF8)" },
+  NED: { label: "Netherlands", accent: "#FB7185", gradient: "linear-gradient(135deg, #BE123C, #FB7185)" },
+  CRO: { label: "Croatia", accent: "#2DD4BF", gradient: "linear-gradient(135deg, #0F766E, #2DD4BF)" }
 };
 
 function createArtworkDataUri(primary, secondary, label) {
@@ -73,16 +73,16 @@ const MatchSchema = ZOD ? ZOD.object({
   MatchDateNew: ZOD.string().optional(),
   GroundName: ZOD.string().optional(),
   city: ZOD.string().optional(),
-  FirstBattingTeamName: ZOD.string().optional(),
-  SecondBattingTeamName: ZOD.string().optional(),
-  FirstBattingTeamCode: ZOD.string().optional(),
-  SecondBattingTeamCode: ZOD.string().optional(),
+  FirstAttackingTeamName: ZOD.string().optional(),
+  SecondAttackingTeamName: ZOD.string().optional(),
+  FirstAttackingTeamCode: ZOD.string().optional(),
+  SecondAttackingTeamCode: ZOD.string().optional(),
   HomeTeamName: ZOD.string().optional(),
   AwayTeamName: ZOD.string().optional(),
   HomeTeamID: ZOD.string().optional(),
   AwayTeamID: ZOD.string().optional(),
-  FirstBattingSummary: ZOD.string().optional(),
-  SecondBattingSummary: ZOD.string().optional(),
+  FirstAttackingSummary: ZOD.string().optional(),
+  SecondAttackingSummary: ZOD.string().optional(),
   Commentss: ZOD.string().optional(),
   PreMatchCommentary: ZOD.string().optional(),
   PostMatchCommentary: ZOD.string().optional(),
@@ -228,8 +228,8 @@ function updatePredictionGame(match) {
   if (!container || container.dataset.locked === "true") return;
 
   if (match) {
-    const t1 = match.FirstBattingTeamCode || "T1";
-    const t2 = match.SecondBattingTeamCode || "T2";
+    const t1 = match.FirstAttackingTeamCode || "T1";
+    const t2 = match.SecondAttackingTeamCode || "T2";
     container.innerHTML = `
       <button onclick="playPredictionGame('${escapeHtml(t1)}')" class="flex-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl py-3 text-sm font-bold transition-all active:scale-95 text-white">${escapeHtml(t1)}</button>
       <div class="text-[0.7rem] font-bold text-white/50">VS</div>
@@ -403,8 +403,8 @@ function filterMatches(matches) {
     filtered = filtered.filter((match) => {
       const haystack = [
         match.MatchName,
-        match.FirstBattingTeamName,
-        match.SecondBattingTeamName,
+        match.FirstAttackingTeamName,
+        match.SecondAttackingTeamName,
         match.HomeTeamName,
         match.AwayTeamName,
         match.GroundName,
@@ -506,7 +506,7 @@ function renderHero(match, matches) {
         <div class="absolute inset-0 bg-gradient-to-b from-white/10 via-black/10 to-black/80"></div>
         <div class="absolute inset-x-4 bottom-4 grid gap-2 rounded-[20px] border border-white/10 bg-black/30 p-4 backdrop-blur-xl">
           <span class="w-fit rounded-full border border-white/10 bg-white/10 px-3 py-2 text-[0.68rem] font-extrabold uppercase tracking-[0.12em] text-white">Live energy</span>
-          <strong class="text-[1.35rem] font-semibold tracking-[-0.04em] text-white">${escapeHtml(match ? (match.FirstBattingTeamCode || "EB") : "EB")}</strong>
+          <strong class="text-[1.35rem] font-semibold tracking-[-0.04em] text-white">${escapeHtml(match ? (match.FirstAttackingTeamCode || "EB") : "EB")}</strong>
         </div>
         <div class="absolute left-0 top-0 h-full w-full rounded-[24px]" style="background:${theme.gradient};opacity:0.08"></div>
       </div>
@@ -632,17 +632,17 @@ function renderMatchCard(match, index) {
       <div class="mt-4 rounded-[20px] border border-white/10 bg-black/35 p-3 backdrop-blur-md">
         <div class="flex items-stretch justify-between gap-2">
           <div class="min-w-0 flex-1">
-            <span class="block text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/65">${escapeHtml(match.FirstBattingTeamCode || match.HomeTeamID || "T1")}</span>
-            <strong class="mt-1 block truncate text-sm font-semibold text-white">${escapeHtml(match.FirstBattingTeamName || "Team 1")}</strong>
-            <small class="block truncate text-[0.82rem] text-white/76">${escapeHtml(match.FirstBattingSummary || "--")}</small>
+            <span class="block text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/65">${escapeHtml(match.FirstAttackingTeamCode || match.HomeTeamID || "T1")}</span>
+            <strong class="mt-1 block truncate text-sm font-semibold text-white">${escapeHtml(match.FirstAttackingTeamName || "Team 1")}</strong>
+            <small class="block truncate text-[0.82rem] text-white/76">${escapeHtml(match.FirstAttackingSummary || "--")}</small>
           </div>
 
           <div class="grid h-11 w-11 shrink-0 place-items-center self-center rounded-full border border-white/10 bg-white/10 text-[0.72rem] font-extrabold tracking-[0.12em] text-white">VS</div>
 
           <div class="min-w-0 flex-1 text-right">
-            <span class="block text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/65">${escapeHtml(match.SecondBattingTeamCode || match.AwayTeamID || "T2")}</span>
-            <strong class="mt-1 block truncate text-sm font-semibold text-white">${escapeHtml(match.SecondBattingTeamName || "Team 2")}</strong>
-            <small class="block truncate text-[0.82rem] text-white/76">${escapeHtml(match.SecondBattingSummary || "--")}</small>
+            <span class="block text-[0.68rem] font-bold uppercase tracking-[0.14em] text-white/65">${escapeHtml(match.SecondAttackingTeamCode || match.AwayTeamID || "T2")}</span>
+            <strong class="mt-1 block truncate text-sm font-semibold text-white">${escapeHtml(match.SecondAttackingTeamName || "Team 2")}</strong>
+            <small class="block truncate text-[0.82rem] text-white/76">${escapeHtml(match.SecondAttackingSummary || "--")}</small>
           </div>
         </div>
       </div>
@@ -659,12 +659,12 @@ function renderMatchCard(match, index) {
           <span class="text-[0.65rem] font-bold uppercase tracking-widest text-white/60 flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></span> Win Probability</span>
         </div>
         <div class="flex items-center gap-2">
-          <div class="text-[0.7rem] font-extrabold text-white w-8 shrink-0">${escapeHtml(match.FirstBattingTeamCode || match.HomeTeamID || 'T1')}</div>
+          <div class="text-[0.7rem] font-extrabold text-white w-8 shrink-0">${escapeHtml(match.FirstAttackingTeamCode || match.HomeTeamID || 'T1')}</div>
           <div class="flex-1 h-2 rounded-full overflow-hidden flex shadow-inner bg-white/5 border border-white/5 relative">
             <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 shadow-[0_0_10px_rgba(59,130,246,0.5)] transition-all duration-1000" style="width: ${match.MatchProgress || 55}%"></div>
             <div class="h-full bg-gradient-to-l from-rose-500 to-orange-400 shadow-[0_0_10px_rgba(244,63,94,0.5)] transition-all duration-1000" style="width: ${100 - (match.MatchProgress || 55)}%"></div>
           </div>
-          <div class="text-[0.7rem] font-extrabold text-white w-8 shrink-0 text-right">${escapeHtml(match.SecondBattingTeamCode || match.AwayTeamID || 'T2')}</div>
+          <div class="text-[0.7rem] font-extrabold text-white w-8 shrink-0 text-right">${escapeHtml(match.SecondAttackingTeamCode || match.AwayTeamID || 'T2')}</div>
         </div>
         <div class="flex justify-between items-center mt-1 px-0.5">
           <span class="text-[0.6rem] font-bold text-cyan-400">${match.MatchProgress || 55}%</span>
@@ -721,12 +721,12 @@ function getMatchDateValue(match) {
 }
 
 function getMatchTheme(match) {
-  const code = String(match?.FirstBattingTeamCode || match?.HomeTeamID || "ALL").toUpperCase();
+  const code = String(match?.FirstAttackingTeamCode || match?.HomeTeamID || "ALL").toUpperCase();
   return TEAM_THEMES[code] || TEAM_THEMES.ALL;
 }
 
 function buildMatchTitle(match) {
-  return [match.FirstBattingTeamName || match.HomeTeamName || "Team 1", match.SecondBattingTeamName || match.AwayTeamName || "Team 2"].filter(Boolean).join(" vs ");
+  return [match.FirstAttackingTeamName || match.HomeTeamName || "Team 1", match.SecondAttackingTeamName || match.AwayTeamName || "Team 2"].filter(Boolean).join(" vs ");
 }
 
 function buildHeroSubtitle(match) {
@@ -748,10 +748,10 @@ function buildMetaLine(match) {
 }
 
 function buildScoreLine(match) {
-  const first = match.FirstBattingTeamCode || match.FirstBattingTeamName || "T1";
-  const second = match.SecondBattingTeamCode || match.SecondBattingTeamName || "T2";
-  const firstScore = match.FirstBattingSummary || "--";
-  const secondScore = match.SecondBattingSummary || "--";
+  const first = match.FirstAttackingTeamCode || match.FirstAttackingTeamName || "T1";
+  const second = match.SecondAttackingTeamCode || match.SecondAttackingTeamName || "T2";
+  const firstScore = match.FirstAttackingSummary || "--";
+  const secondScore = match.SecondAttackingSummary || "--";
 
   if (String(match.MatchStatus || "").toLowerCase() === "live") return `${first} ${firstScore} ${second} ${secondScore}`;
   if (String(match.MatchStatus || "").toLowerCase() === "upcoming") return `${first} vs ${second}`;
