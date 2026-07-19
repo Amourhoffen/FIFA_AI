@@ -50,10 +50,13 @@
 
       <div class="min-w-0 flex-1">
         <p class="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-fifa-muted">Smart Stadium</p>
-        <h1 class="truncate text-[1.02rem] font-semibold tracking-[-0.04em]">FIFA 2026 Crowd Management</h1>
+        <h1 class="truncate text-[1.02rem] font-semibold tracking-[-0.04em]">
+          FIFA 2026 Crowd Management
+          <span class="ml-2 inline-block rounded-md bg-fifa-glow/20 px-2 py-0.5 text-[0.65rem] text-fifa-glow border border-fifa-glow/50 align-middle">Powered by Gemini AI</span>
+        </h1>
       </div>
 
-      <button id="profileButton" type="button" aria-label="Open profile" class="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-150 hover:-translate-y-0.5 hover:bg-white/10">
+      <button id="profileButton" type="button" aria-label="Open profile" class="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-150 hover:-translate-y-0.5 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-fifa-glow focus:outline-none">
         <span class="text-sm font-extrabold tracking-[0.04em]">EX</span>
       </button>
     </header>
@@ -80,7 +83,7 @@
         <span id="matchCount" class="grid h-[42px] min-w-[42px] place-items-center rounded-full bg-gradient-to-br from-fifa-glow via-fifa-pink to-fifa-magenta px-3 text-[0.75rem] font-extrabold text-white shadow-premium">0</span>
       </section>
 
-      <section id="matchList" aria-label="Live matches" class="flex flex-col gap-3"></section>
+      <section id="matchList" aria-label="Live matches" class="flex flex-col gap-3" aria-live="polite"></section>
     </main>
   </div>
 

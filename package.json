@@ -5,10 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "node --env-file=.env server/index.js",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --passWithNoTests"
   },
   "dependencies": {
     "@google/genai": "*",
     "zod": "*"
+  },
+  "devDependencies": {
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
   }
 }

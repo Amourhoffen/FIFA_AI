@@ -9,6 +9,31 @@ const rootDir = resolve(process.cwd());
 const publicDir = join(rootDir, 'public');
 const port = Number(process.env.PORT || 3000);
 
+// ─── Rate Limiter Memory Store ─────────────────────────────────────────────
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 30; // 30 requests per minute
+
+/**
+ * Checks if a given IP has exceeded the rate limit.
+ * @param {string} ip - The client's IP address.
+ * @returns {boolean} True if rate limited, false otherwise.
+ */
+function isRateLimited(ip) {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip) || { count: 0, startTime: now };
+
+  if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
+    record.count = 1;
+    record.startTime = now;
+  } else {
+    record.count++;
+  }
+
+  rateLimitMap.set(ip, record);
+  return record.count > MAX_REQUESTS_PER_WINDOW;
+}
+
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
@@ -20,6 +45,12 @@ const contentTypes = {
   '.webp': 'image/webp'
 };
 
+/**
+ * Safely joins and resolves a path to prevent directory traversal attacks.
+ * @param {string} baseDir - The root directory.
+ * @param {string} requestPath - The requested relative path.
+ * @returns {string|null} The resolved absolute path, or null if invalid.
+ */
 function safeJoin(baseDir, requestPath) {
   const normalizedPath = requestPath.replace(/^\/+/, '');
   const resolvedPath = resolve(baseDir, normalizedPath);
@@ -30,13 +61,23 @@ function safeJoin(baseDir, requestPath) {
   return resolvedPath;
 }
 
+/**
+ * Serves a static file with appropriate Content-Type and Cache-Control headers.
+ * @param {import('node:http').ServerResponse} response - The HTTP response object.
+ * @param {string} filePath - Absolute path to the file.
+ */
 async function sendFile(response, filePath) {
   try {
     const fileContents = await readFile(filePath);
     const extension = extname(filePath).toLowerCase();
+    
+    // Efficiency: Cache static assets aggressively (1 year)
+    const isStaticAsset = ['.js', '.png', '.jpg', '.jpeg', '.webp', '.svg'].includes(extension);
+    const cacheControl = isStaticAsset ? 'public, max-age=31536000, immutable' : 'no-store';
+
     response.writeHead(200, {
       'Content-Type': contentTypes[extension] || 'application/octet-stream',
-      'Cache-Control': 'no-store'
+      'Cache-Control': cacheControl
     });
     response.end(fileContents);
   } catch (error) {
@@ -45,8 +86,24 @@ async function sendFile(response, filePath) {
   }
 }
 
-const server = createServer(async (request, response) => {
+export const server = createServer(async (request, response) => {
   const url = new URL(request.url || '/', `http://${request.headers.host || 'localhost'}`);
+  const clientIp = request.headers['x-forwarded-for'] || request.socket.remoteAddress || 'unknown';
+
+  // Security: Apply Rate Limiting
+  if (isRateLimited(clientIp)) {
+    response.writeHead(429, { 'Content-Type': 'text/plain; charset=utf-8' });
+    response.end('Too Many Requests');
+    return;
+  }
+
+  // Security: Apply Security Headers
+  response.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  response.setHeader('X-Content-Type-Options', 'nosniff');
+  response.setHeader('X-Frame-Options', 'DENY');
+  response.setHeader('X-XSS-Protection', '1; mode=block');
+  // Only allow our own scripts and CDN scripts
+  response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://upload.wikimedia.org https://i.guim.co.uk https://phantom-marca.unidadeditorial.es; connect-src 'self' https://generativelanguage.googleapis.com https://www.googleapis.com; frame-src 'self' https://www.youtube.com");
 
   // Enable CORS headers for ease of local testing and remote containerized access
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -124,6 +181,9 @@ const server = createServer(async (request, response) => {
   await sendFile(response, filePath);
 });
 
-server.listen(port, () => {
-  console.log(`Smart Stadium listening on http://localhost:${port}`);
-});
+// Only start listening automatically if run directly (not imported in tests)
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(port, () => {
+    console.log(`Smart Stadium listening on http://localhost:${port}`);
+  });
+}
