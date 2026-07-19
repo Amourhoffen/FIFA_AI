@@ -36,6 +36,7 @@ function isRateLimited(ip) {
 
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
   '.js': 'application/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml; charset=utf-8',
@@ -72,7 +73,7 @@ async function sendFile(response, filePath) {
     const extension = extname(filePath).toLowerCase();
     
     // Efficiency: Cache static assets aggressively (1 year)
-    const isStaticAsset = ['.js', '.png', '.jpg', '.jpeg', '.webp', '.svg'].includes(extension);
+    const isStaticAsset = ['.js', '.css', '.png', '.jpg', '.jpeg', '.webp', '.svg'].includes(extension);
     const cacheControl = isStaticAsset ? 'public, max-age=31536000, immutable' : 'no-store';
 
     response.writeHead(200, {
