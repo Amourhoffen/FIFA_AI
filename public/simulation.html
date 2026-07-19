@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <title>FIFA 2026 Crowd Simulation</title>
+  <meta name="description" content="Live 2D Crowd Flow Simulation Dashboard for FIFA 2026 Stadium Crowd Management and Security." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/simulation.css" />
 </head>
 <body>
@@ -10,8 +12,8 @@
     <!-- Header -->
     <div class="top-bar">
       <div class="header-left">
-        <a href="/" class="btn btn-back" style="text-decoration:none;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        <a href="/" class="btn btn-back" style="text-decoration:none;" aria-label="Go back to dashboard">
+          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
           Back
         </a>
         <h1 class="header-title">FIFA Crowd Management — Smart Control Room</h1>
@@ -33,29 +35,29 @@
     </div>
     
     <!-- Canvas Area -->
-    <div class="canvas-container" id="canvas-container">
-      <canvas id="sim-canvas"></canvas>
-    </div>
+    <main class="canvas-container" id="canvas-container" aria-label="Live Crowd Simulation Map">
+      <canvas id="sim-canvas" aria-label="Interactive 2D physics simulation of stadium crowd flow"></canvas>
+    </main>
     
     <!-- Sidebar -->
-    <div class="sidebar">
+    <aside class="sidebar" aria-label="Live Incident Alerts Sidebar">
       <h3 class="sidebar-title">Live Incident Alerts</h3>
-      <div id="alerts-panel"></div>
-    </div>
+      <div id="alerts-panel" aria-live="polite"></div>
+    </aside>
     
     <!-- Bottom Controls -->
-    <div class="bottom-bar">
+    <nav class="bottom-bar" aria-label="Simulation Controls">
       <div class="control-group">
-        <button class="btn" id="btn-playpause">Pause</button>
-        <button class="btn" id="btn-reset">Reset</button>
+        <button class="btn" id="btn-playpause" aria-label="Pause Simulation">Pause</button>
+        <button class="btn" id="btn-reset" aria-label="Reset Simulation">Reset</button>
       </div>
       <div class="control-group">
-        <span class="control-label">Scenario Override:</span>
-        <button class="btn btn-scen active" id="btn-scen-normal">Normal Flow</button>
-        <button class="btn btn-scen" id="btn-scen-surge">Exit Surge</button>
-        <button class="btn btn-scen" id="btn-scen-evac">Emergency Evac</button>
+        <span class="control-label" id="scenario-label">Scenario Override:</span>
+        <button class="btn btn-scen active" id="btn-scen-normal" aria-pressed="true" aria-labelledby="scenario-label">Normal Flow</button>
+        <button class="btn btn-scen" id="btn-scen-surge" aria-pressed="false" aria-labelledby="scenario-label">Exit Surge</button>
+        <button class="btn btn-scen" id="btn-scen-evac" aria-pressed="false" aria-labelledby="scenario-label">Emergency Evac</button>
       </div>
-    </div>
+    </nav>
   </div>
   
   <script type="module" src="js/simulation/main.js"></script>

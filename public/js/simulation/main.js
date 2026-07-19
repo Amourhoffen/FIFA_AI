@@ -1,3 +1,8 @@
+/**
+ * @fileoverview Main Simulation Loop for FIFA Crowd Management Engine
+ * Handles the game loop, canvas rendering, and triggering Gen AI Alerts
+ * based on real-time crowd congestion and bottleneck detection.
+ */
 import { stadium, getAllZones } from './stadium.js';
 import { Agent } from './agent.js';
 import { drawStadium } from './heatmap.js';

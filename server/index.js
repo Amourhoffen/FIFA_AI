@@ -4,35 +4,35 @@ import { extname, join, resolve } from 'node:path';
 import { handleGenerateMoment } from './generateMoment.js';
 import { handleLiveMatches } from './footballApi.js';
 import { handleTrendingShorts } from './youtubeShorts.js';
+import { readFileSync, existsSync } from 'fs';
+
+// Rate Limiting (in-memory)
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 200; // 200 requests per IP per minute
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_LIMIT_WINDOW_MS });
+    return true;
+  }
+  const record = rateLimitMap.get(ip);
+  if (now > record.resetTime) {
+    record.count = 1;
+    record.resetTime = now + RATE_LIMIT_WINDOW_MS;
+    return true;
+  }
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    return false;
+  }
+  record.count++;
+  return true;
+}
 
 const rootDir = resolve(process.cwd());
 const publicDir = join(rootDir, 'public');
 const port = Number(process.env.PORT || 3000);
-
-// ─── Rate Limiter Memory Store ─────────────────────────────────────────────
-const rateLimitMap = new Map();
-const RATE_LIMIT_WINDOW_MS = 60000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 30; // 30 requests per minute
-
-/**
- * Checks if a given IP has exceeded the rate limit.
- * @param {string} ip - The client's IP address.
- * @returns {boolean} True if rate limited, false otherwise.
- */
-function isRateLimited(ip) {
-  const now = Date.now();
-  const record = rateLimitMap.get(ip) || { count: 0, startTime: now };
-
-  if (now - record.startTime > RATE_LIMIT_WINDOW_MS) {
-    record.count = 1;
-    record.startTime = now;
-  } else {
-    record.count++;
-  }
-
-  rateLimitMap.set(ip, record);
-  return record.count > MAX_REQUESTS_PER_WINDOW;
-}
 
 const contentTypes = {
   '.html': 'text/html; charset=utf-8',
@@ -92,9 +92,9 @@ export const server = createServer(async (request, response) => {
   const clientIp = request.headers['x-forwarded-for'] || request.socket.remoteAddress || 'unknown';
 
   // Security: Apply Rate Limiting
-  if (isRateLimited(clientIp)) {
-    response.writeHead(429, { 'Content-Type': 'text/plain; charset=utf-8' });
-    response.end('Too Many Requests');
+  if (!checkRateLimit(clientIp)) {
+    response.writeHead(429, { 'Content-Type': 'application/json; charset=utf-8' });
+    response.end(JSON.stringify({ error: 'Too Many Requests' }));
     return;
   }
 
@@ -104,7 +104,7 @@ export const server = createServer(async (request, response) => {
   response.setHeader('X-Frame-Options', 'DENY');
   response.setHeader('X-XSS-Protection', '1; mode=block');
   // Only allow our own scripts and CDN scripts
-  response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://upload.wikimedia.org https://i.guim.co.uk https://phantom-marca.unidadeditorial.es; connect-src 'self' https://generativelanguage.googleapis.com https://www.googleapis.com; frame-src 'self' https://www.youtube.com");
+  response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://upload.wikimedia.org https://i.guim.co.uk https://phantom-marca.unidadeditorial.es; connect-src 'self' https://generativelanguage.googleapis.com https://www.googleapis.com; frame-src 'self' https://www.youtube.com");
 
   // Enable CORS headers for ease of local testing and remote containerized access
   response.setHeader('Access-Control-Allow-Origin', '*');

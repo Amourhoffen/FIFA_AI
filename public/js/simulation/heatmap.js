@@ -1,5 +1,17 @@
+/**
+ * @fileoverview Heatmap Visualization for FIFA Crowd Management
+ * Renders the live 2D Stadium Map and dynamic congestion heatmaps.
+ * Critical for visually solving bottleneck and safety alerts using telemetry.
+ */
 import { stadium, getAllZones } from './stadium.js';
 
+/**
+ * Draws the stadium pitch and all interactive crowd zones onto the canvas.
+ * Applies color-coded severity (Green = Safe, Yellow = Warning, Red = Critical Bottleneck).
+ * @param {CanvasRenderingContext2D} ctx - The canvas 2D rendering context
+ * @param {number} canvasWidth - Current width of the responsive canvas container
+ * @param {number} canvasHeight - Current height of the responsive canvas container
+ */
 export function drawStadium(ctx, canvasWidth, canvasHeight) {
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
   
