@@ -45,10 +45,10 @@ const FALLBACK_MATCHES = [
 
 // Quick select vibe chips
 const VIBE_PRESETS = [
-  { id: "vibe_octane", label: "🔥 High-Octane Thriller", text: "high energy, heart-pounding tension, extreme stadium volume" },
-  { id: "vibe_electric", label: "⚡ Last-Ball Finish", text: "last-over drama, maximum pressure, absolute disbelief" },
-  { id: "vibe_dominant", label: "👑 Clinical Dominance", text: "complete masterclass, absolute control, surgical precision" },
-  { id: "vibe_clinch", label: "🎯 Strategic Clincher", text: "tactical genius, clever death-bowling, high tension game of chess" }
+  { id: "vibe_octane", label: "🔥 Goal Celebration Spike", text: "high density, sudden crowd surges, extreme stadium volume" },
+  { id: "vibe_electric", label: "⚡ Last-Ball Finish", text: "gate bottleneck, maximum pressure, high wait times" },
+  { id: "vibe_dominant", label: "👑 Clinical Dominance", text: "complete Concession Queue Spike, absolute control, surgical precision" },
+  { id: "vibe_clinch", label: "🎯 Strategic Clincher", text: "heavy influx of fans at security checkpoints" }
 ];
 
 /**
@@ -135,7 +135,7 @@ export function createHeroSection(hero) {
               </div>
               <div>
                 <p class="mb-0.5 text-[0.62rem] font-bold uppercase tracking-[0.16em] text-fifa-pink">Smart Stadium</p>
-                <h1 class="text-sm font-bold tracking-tight text-white">AI Story Synth</h1>
+                <h1 class="text-sm font-bold tracking-tight text-white">AI Crowd Plan</h1>
               </div>
             </div>
             
@@ -187,8 +187,8 @@ export function createHeroSection(hero) {
 
               <div class="border-t border-white/5 pt-4 flex flex-col gap-3">
                 <span class="text-[0.7rem] font-black uppercase tracking-[0.16em] text-fifa-pink">Step 02</span>
-                <h3 class="text-xl font-bold tracking-tight text-white">Capture Your Sentiment Vibe</h3>
-                <p class="text-xs text-fifa-muted">How does the stadium energy feel right now?</p>
+                <h3 class="text-xl font-bold tracking-tight text-white">Select Telemetry Anomaly</h3>
+                <p class="text-xs text-fifa-muted">What is the current crowd anomaly?</p>
                 
                 <div class="flex flex-wrap gap-2 mt-1">
                   ${vibeChipsHtml}
@@ -198,7 +198,7 @@ export function createHeroSection(hero) {
                   <input 
                     id="customVibeInput" 
                     type="text" 
-                    placeholder="Or type custom stadium vibe (e.g. dramatic hat-trick tension...)" 
+                    placeholder="Or type custom telemetry anomaly (e.g. VIP entrance overload...)" 
                     class="w-full border-0 bg-transparent text-sm text-white outline-none placeholder:text-fifa-muted/60"
                   />
                 </div>
@@ -222,7 +222,7 @@ export function createHeroSection(hero) {
                     type="button" 
                     class="rounded-full bg-gradient-to-br from-fifa-glow via-fifa-pink to-fifa-magenta px-7 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-premium transform-gpu transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_24px_rgba(199,125,255,0.4)] flex items-center justify-center gap-2"
                     style="box-shadow: 0 0 20px rgba(123,44,191,0.3)">
-                    SYNTHESIZE MOMENT ⚡
+                    GENERATE ACTION PLAN ⚡
                   </button>
                 </div>
               </div>
@@ -257,7 +257,7 @@ export function createHeroSection(hero) {
                 <div class="flex items-center justify-between">
                   <div class="min-w-0">
                     <span class="block text-[0.62rem] font-bold uppercase tracking-[0.14em] text-white/50">Selected Sentiment</span>
-                    <strong id="previewSentimentDisplay" class="mt-0.5 block truncate text-xs font-semibold text-fifa-pink">high energy, heart-pounding tension, extreme stadium volume</strong>
+                    <strong id="previewSentimentDisplay" class="mt-0.5 block truncate text-xs font-semibold text-fifa-pink">high density, sudden crowd surges, extreme stadium volume</strong>
                   </div>
                   <div class="h-8 w-8 rounded-full bg-[#FF4D9D]/20 border border-[#FF4D9D]/30 flex items-center justify-center text-xs">💖</div>
                 </div>
@@ -286,7 +286,7 @@ export function createHeroSection(hero) {
 
             <!-- Loader status stack -->
             <div class="flex flex-col gap-2 w-full">
-              <h3 class="text-xl font-bold uppercase tracking-wider text-white">Synthesizing Match-Moment</h3>
+              <h3 class="text-xl font-bold uppercase tracking-wider text-white">Generating Crowd Action Plan</h3>
               <p class="text-xs text-fifa-pink tracking-widest font-extrabold uppercase">Latency-Masked AI Engine Active</p>
               
               <!-- Neon Progress Bar -->
@@ -313,7 +313,7 @@ export function createHeroSection(hero) {
               <span class="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]"></span>
               Synthesis Complete
             </span>
-            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">Viral Match Story</h2>
+            <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight text-white">Crowd Action Plan</h2>
           </div>
 
           <!-- Split-screen Climax display -->
@@ -329,7 +329,7 @@ export function createHeroSection(hero) {
                   </div>
                   <div class="text-right">
                     <span class="block text-[0.62rem] font-bold uppercase tracking-[0.14em] text-white/50">Vibe Signature</span>
-                    <span id="climaxSentimentBadge" class="mt-1 inline-block rounded-full bg-fifa-glow/30 border border-fifa-pink/30 px-3 py-1 text-[0.68rem] font-bold text-white">🔥 High-Octane Thriller</span>
+                    <span id="climaxSentimentBadge" class="mt-1 inline-block rounded-full bg-fifa-glow/30 border border-fifa-pink/30 px-3 py-1 text-[0.68rem] font-bold text-white">🔥 Goal Celebration Spike</span>
                   </div>
                 </div>
 
@@ -436,7 +436,7 @@ export function createHeroSection(hero) {
                   id="resetMomentBtn" 
                   type="button" 
                   class="flex-1 rounded-full bg-gradient-to-br from-fifa-glow via-fifa-pink to-fifa-magenta px-6 py-4 text-xs font-black uppercase tracking-[0.12em] text-white shadow-premium transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2 transform-gpu will-change-transform">
-                  🔄 CREATE NEW MOMENT
+                  🔄 GENERATE NEW PLAN
                 </button>
               </div>
 
@@ -668,7 +668,7 @@ export function playClimaxRevealTransition(storyData) {
     vibe_octane: '⚡ FIFA 2026 HISTORIC EPIC',
     vibe_electric: '💥 CRITICAL CLINCHER',
     vibe_dominant: '🏆 CLINICAL DOMINANCE',
-    vibe_clinch: '🧠 TACTICAL MASTERCLASS'
+    vibe_clinch: '🧠 TACTICAL Concession Queue Spike'
   };
   const archetypeBadge = climaxSec.querySelector('.rounded-full.bg-gradient-to-r');
   if (archetypeBadge) {
