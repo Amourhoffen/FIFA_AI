@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+  <title>Smart Stadium</title>
+  <script>
+    window.tailwind = {
+      config: {
+        theme: {
+          extend: {
+            colors: {
+              'fifa-bg': '#0D0D12',
+              'fifa-surface': '#141E27',
+              'fifa-muted': '#8E8E93',
+              'fifa-glow': '#00A15D',
+              'fifa-pink': '#E21A22',
+              'fifa-magenta': '#F9A01B'
+            },
+            fontFamily: {
+              inter: ['Inter', 'sans-serif'],
+              poppins: ['Poppins', 'sans-serif']
+            },
+            boxShadow: {
+              premium: '0 18px 60px rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/zod@3.23.8/lib/index.umd.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { background-color: #0D0D12; }
+  </style>
+</head>
+<body class="overflow-x-hidden bg-fifa-bg font-inter text-white" data-bg="#0D0D12">
+  <div id="app" class="mx-auto flex min-h-screen w-full max-w-[460px] md:max-w-6xl flex-col gap-4 px-4 pb-8 pt-4 justify-center">
+    <header data-animate="app-bar" class="flex items-center justify-between gap-3 rounded-[24px] border border-white/10 bg-fifa-surface/90 px-4 py-3 shadow-premium backdrop-blur-xl">
+      <button id="menuButton" type="button" aria-label="Open menu" class="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-150 hover:-translate-y-0.5 hover:bg-white/10">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-none stroke-current stroke-2 stroke-linecap-round stroke-linejoin-round"><path d="M4 7h16M4 12h16M4 17h12" /></svg>
+      </button>
+
+      <div class="min-w-0 flex-1">
+        <p class="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-fifa-muted">Smart Stadium</p>
+        <h1 class="truncate text-[1.02rem] font-semibold tracking-[-0.04em]">FIFA 2026 Crowd Management</h1>
+      </div>
+
+      <button id="profileButton" type="button" aria-label="Open profile" class="grid h-11 w-11 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition-transform duration-150 hover:-translate-y-0.5 hover:bg-white/10">
+        <span class="text-sm font-extrabold tracking-[0.04em]">EX</span>
+      </button>
+    </header>
+
+    <main class="flex flex-col gap-4">
+      <section class="rounded-[22px] border border-white/10 bg-fifa-surface/90 p-2 shadow-premium backdrop-blur-xl">
+        <label class="flex items-center gap-3 rounded-[18px] border border-white/10 bg-white/5 px-4 py-3" aria-label="Search matches">
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="h-5 w-5 fill-current text-fifa-muted">
+            <path d="M10.5 4.5a6 6 0 1 0 3.89 10.58l4.56 4.56 1.06-1.06-4.56-4.56A6 6 0 0 0 10.5 4.5Zm0 1.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" />
+          </svg>
+          <input id="searchInput" type="search" placeholder="Search teams, venues, fixtures" autocomplete="off" class="min-w-0 flex-1 border-0 bg-transparent text-sm text-white outline-none placeholder:text-fifa-muted/80" />
+        </label>
+      </section>
+
+      <section id="quickActionRail" aria-label="Quick actions" class="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]"></section>
+
+      <section id="heroBanner" aria-label="Promotional banner" class="overflow-hidden rounded-[28px] border border-white/10 bg-fifa-surface/90 shadow-premium backdrop-blur-xl"></section>
+
+      <section class="flex items-end justify-between gap-3 pt-1">
+        <div>
+          <p class="mb-1 text-[0.7rem] font-bold uppercase tracking-[0.16em] text-fifa-muted">Match feed</p>
+          <h2 id="feedTitle" class="text-[1.3rem] font-semibold tracking-[-0.04em]">Live matches</h2>
+        </div>
+        <span id="matchCount" class="grid h-[42px] min-w-[42px] place-items-center rounded-full bg-gradient-to-br from-fifa-glow via-fifa-pink to-fifa-magenta px-3 text-[0.75rem] font-extrabold text-white shadow-premium">0</span>
+      </section>
+
+      <section id="matchList" aria-label="Live matches" class="flex flex-col gap-3"></section>
+    </main>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>

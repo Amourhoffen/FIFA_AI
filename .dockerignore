@@ -1,0 +1,9 @@
+node_modules
+.env
+.firebase
+.git
+.gitignore
+*.md
+dist
+deploy.sh
+deploy.ps1
