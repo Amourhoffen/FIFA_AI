@@ -10,6 +10,42 @@ Smart Stadium is a second-screen web app for live FIFA 2026 matches. The first s
 * [public/js/components/heroSection.js](public/js/components/heroSection.js) renders the premium split-screen hero and GSAP reveal choreography.
 * [public/js/schemas.js](public/js/schemas.js) holds the Zod schema used by the frontend.
 
+## 📸 Screenshots
+
+*(Replace the paths below with your actual screenshot images)*
+
+| Live Telemetry Dashboard | AI Crowd Action Plan |
+| :---: | :---: |
+| <img src="https://via.placeholder.com/600x400?text=Live+Dashboard+Screenshot" alt="Live Dashboard" width="400"/> | <img src="https://via.placeholder.com/600x400?text=GenAI+Action+Plan" alt="AI Action Plan" width="400"/> |
+
+## 🏗️ Architecture Graph
+
+```mermaid
+graph TD
+    %% Styling
+    classDef client fill:#141E27,stroke:#00A15D,stroke-width:2px,color:#fff
+    classDef server fill:#0D0D12,stroke:#E21A22,stroke-width:2px,color:#fff
+    classDef ai fill:#4285F4,stroke:#fff,stroke-width:2px,color:#fff
+    classDef external fill:#F9A01B,stroke:#fff,stroke-width:2px,color:#fff
+
+    %% Components
+    UI[🖥️ Frontend Client<br>Tailwind CSS & GSAP]:::client
+    Server[⚙️ Node.js Backend<br>API Server]:::server
+    Gemini[🧠 Google Gemini AI<br>Action Plan Synthesis]:::ai
+    Telemetry[📊 Live Match API<br>Telemetry Data]:::external
+
+    %% Connections
+    UI -- "1. Fetches Match Data" --> Server
+    Server -- "2. Pulls Telemetry" --> Telemetry
+    Telemetry -- "3. Streams Data" --> Server
+    Server -- "4. Displays Dashboard" --> UI
+    
+    UI -- "5. Triggers Crowd Alert" --> Server
+    Server -- "6. Sends Zod Prompt" --> Gemini
+    Gemini -- "7. Generates JSON Action Plan" --> Server
+    Server -- "8. Displays Dispatch Plan" --> UI
+```
+
 ## 🏆 Problem Statement Alignment (Gen AI Integration)
 
 This project heavily leverages **Google Gemini AI** to solve the complex challenge of **FIFA 2026 Crowd Management**:
