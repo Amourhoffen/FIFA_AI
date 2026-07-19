@@ -12,11 +12,18 @@ Smart Stadium is a second-screen web app for live FIFA 2026 matches. The first s
 
 ## 📸 Screenshots
 
-*(Replace the paths below with your actual screenshot images)*
+Here are the key interfaces of the FIFA Crowd Management system:
 
-| Live Telemetry Dashboard | AI Crowd Action Plan |
-| :---: | :---: |
-| <img src="https://via.placeholder.com/600x400?text=Live+Dashboard+Screenshot" alt="Live Dashboard" width="400"/> | <img src="https://via.placeholder.com/600x400?text=GenAI+Action+Plan" alt="AI Action Plan" width="400"/> |
+### 1. Main Dashboard (Live Telemetry & Vibe Selection)
+![Main Dashboard](docs/dashboard.png)
+
+### 2. Live Crowd Flow (Real-time Heatmap & Congestion Simulation)
+![Live Crowd Flow](docs/live_flow.png)
+
+### 3. AI Crowd Action Plan (Gemini-generated Responses)
+![AI Action Plan](docs/ai_plan.png)
+
+*(Note: To make these images appear on GitHub, please save your screenshots inside a `docs` folder in this repository named `dashboard.png`, `live_flow.png`, and `ai_plan.png` respectively, and push them to GitHub).*
 
 ## 🏗️ Architecture Graph
 
@@ -29,7 +36,8 @@ graph TD
     classDef external fill:#F9A01B,stroke:#fff,stroke-width:2px,color:#fff
 
     %% Components
-    UI[🖥️ Frontend Client<br>Tailwind CSS & GSAP]:::client
+    UI[🖥️ Frontend Dashboard<br>Tailwind CSS & GSAP]:::client
+    SimEngine[🎮 Live Crowd Engine<br>Canvas 2D Physics]:::client
     Server[⚙️ Node.js Backend<br>API Server]:::server
     Gemini[🧠 Google Gemini AI<br>Action Plan Synthesis]:::ai
     Telemetry[📊 Live Match API<br>Telemetry Data]:::external
@@ -40,10 +48,13 @@ graph TD
     Telemetry -- "3. Streams Data" --> Server
     Server -- "4. Displays Dashboard" --> UI
     
-    UI -- "5. Triggers Crowd Alert" --> Server
-    Server -- "6. Sends Zod Prompt" --> Gemini
-    Gemini -- "7. Generates JSON Action Plan" --> Server
-    Server -- "8. Displays Dispatch Plan" --> UI
+    UI -- "5. Navigates To" --> SimEngine
+    SimEngine -- "6. Live Crowd Physics" --> SimEngine
+    
+    UI -- "7. Triggers Crowd Alert" --> Server
+    Server -- "8. Sends Zod Prompt" --> Gemini
+    Gemini -- "9. Generates JSON Action Plan" --> Server
+    Server -- "10. Displays Dispatch Plan" --> UI
 ```
 
 ## 🏆 Problem Statement Alignment (Gen AI Integration)
