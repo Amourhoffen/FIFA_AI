@@ -21,28 +21,36 @@ export function drawStadium(ctx, canvasWidth, canvasHeight) {
     let occRatio = z.occupancy / z.capacity;
     let color = 'rgba(255, 255, 255, 0.05)';
     
-    if (occRatio > 0.85) color = 'rgba(226, 26, 34, 0.4)'; // Red
-    else if (occRatio > 0.6) color = 'rgba(249, 160, 27, 0.4)'; // Yellow
-    else if (occRatio > 0.1) color = 'rgba(0, 161, 93, 0.2)'; // Green
+    let strokeColor = 'rgba(255, 255, 255, 0.2)';
+    
+    if (occRatio > 0.85) { color = 'rgba(239, 68, 68, 0.3)'; strokeColor = '#ef4444'; } // Red
+    else if (occRatio > 0.6) { color = 'rgba(234, 179, 8, 0.3)'; strokeColor = '#eab308'; } // Yellow
+    else if (occRatio > 0.1) { color = 'rgba(34, 197, 94, 0.15)'; strokeColor = '#22c55e'; } // Green
     
     ctx.fillStyle = color;
-    ctx.strokeStyle = '#ffffff22';
+    ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 1.5;
     
     if (z.w) {
       ctx.fillRect(z.x, z.y, z.w, z.h);
       ctx.strokeRect(z.x, z.y, z.w, z.h);
-      ctx.fillStyle = '#fff';
-      ctx.font = '10px Inter';
-      ctx.fillText(z.id + ' (' + z.occupancy + ')', z.x + 5, z.y + 15);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.font = 'bold 11px Inter';
+      ctx.fillText(z.id.toUpperCase(), z.x + 8, z.y + 20);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.font = '10px JetBrains Mono';
+      ctx.fillText(Math.round(occRatio*100) + '% FULL', z.x + 8, z.y + 36);
     } else {
       ctx.beginPath();
       ctx.arc(z.x, z.y, 40, 0, Math.PI*2);
       ctx.fill();
       ctx.stroke();
-      ctx.fillStyle = '#fff';
-      ctx.font = '10px Inter';
-      ctx.fillText(z.id, z.x - 20, z.y - 10);
-      ctx.fillText(z.occupancy + '/' + z.capacity, z.x - 15, z.y + 5);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+      ctx.font = 'bold 10px Inter';
+      ctx.fillText(z.id.toUpperCase(), z.x - 22, z.y - 10);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.font = '9px JetBrains Mono';
+      ctx.fillText(z.occupancy + '/' + z.capacity, z.x - 18, z.y + 5);
     }
   });
 }

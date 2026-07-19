@@ -70,6 +70,18 @@ function loop() {
 }
 
 // Controls
+const scenBtns = [
+  document.getElementById('btn-scen-normal'),
+  document.getElementById('btn-scen-surge'),
+  document.getElementById('btn-scen-evac')
+];
+
+function setScenario(s, activeBtn) {
+  scenario = s;
+  scenBtns.forEach(b => b.classList.remove('active'));
+  activeBtn.classList.add('active');
+}
+
 document.getElementById('btn-playpause').addEventListener('click', (e) => {
   isPaused = !isPaused;
   e.target.innerText = isPaused ? 'Play' : 'Pause';
@@ -79,8 +91,8 @@ document.getElementById('btn-reset').addEventListener('click', () => {
   agents = [];
   spawnAgents(200);
 });
-document.getElementById('btn-scen-normal').addEventListener('click', () => scenario = 'normal');
-document.getElementById('btn-scen-surge').addEventListener('click', () => scenario = 'surge');
-document.getElementById('btn-scen-evac').addEventListener('click', () => scenario = 'evac');
+document.getElementById('btn-scen-normal').addEventListener('click', (e) => setScenario('normal', e.target));
+document.getElementById('btn-scen-surge').addEventListener('click', (e) => setScenario('surge', e.target));
+document.getElementById('btn-scen-evac').addEventListener('click', (e) => setScenario('evac', e.target));
 
 init();
